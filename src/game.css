@@ -1,0 +1,36 @@
+.game-container {
+	width: 80%;
+	margin: 0 auto;
+}
+
+.hero-text {
+	font-size: 2rem;
+	text-align: center;
+	margin-top: 1em;
+}
+
+.game-stuff {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.questions {
+	text-align: center;
+	padding: 3em;
+	font-size: 3rem;
+}
+
+.questions form {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 1rem;
+}
+
+form input {
+	font-size: 2rem;
+	width: 4rem;
+	text-align: center;
+	font-weight: bold;
+}
