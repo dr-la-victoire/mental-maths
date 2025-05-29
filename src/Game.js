@@ -27,7 +27,7 @@ function Game() {
 		hard: {
 			range: 100,
 			operators: ["+", "-", "×", "÷"],
-			timeLimit: 5,
+			timeLimit: 10,
 		},
 	};
 
