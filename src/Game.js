@@ -2,14 +2,43 @@ import { useState, useEffect } from "react";
 import "./game.css";
 
 function Game() {
+	// setting difficulty levels
+	const difficulty = {
+		easy: {
+			range: 10,
+			operators: ["+"],
+			timeLimit: 10,
+		},
+		novice: {
+			range: 10,
+			operators: ["+", "-", "×"],
+			timeLimit: 7,
+		},
+		amateur: {
+			range: 20,
+			operators: ["+", "-", "×", "÷"],
+			timeLimit: 7,
+		},
+		medium: {
+			range: 25,
+			operators: ["+", "-"],
+			timeLimit: 7,
+		},
+		hard: {
+			range: 100,
+			operators: ["+", "-", "×", "÷"],
+			timeLimit: 5,
+		},
+	};
+
 	// function to generate the random questions
-	const generateNumbers = () => {
-		const operators = ["+", "-", "×", "÷"];
+	const generateNumbers = (difficultyLevel) => {
+		const { range, operators } = difficulty[difficultyLevel];
 		const operator =
 			operators[Math.floor(Math.random() * operators.length)];
 
-		let num1 = Math.floor(Math.random() * 10) + 1;
-		let num2 = Math.floor(Math.random() * 10) + 1;
+		let num1 = Math.floor(Math.random() * range) + 1;
+		let num2 = Math.floor(Math.random() * range) + 1;
 
 		if (operator === "÷") {
 			num1 = num1 * num2;
@@ -21,12 +50,30 @@ function Game() {
 		};
 	};
 
+	// function to get the difficulty level from the score
+	const getDifficultyFromScore = (score) => {
+		if (score >= 70) {
+			return "hard";
+		} else if (score >= 50) {
+			return "medium";
+		} else if (score >= 30) {
+			return "amateur";
+		} else if (score >= 15) {
+			return "novice";
+		} else {
+			return "easy";
+		}
+	};
+
 	// setting the various states
-	const [question, setQuestion] = useState(generateNumbers());
+	const initialDifficulty = getDifficultyFromScore(0);
+	const [question, setQuestion] = useState(
+		generateNumbers(initialDifficulty),
+	);
 	const [answer, setAnswer] = useState("");
 	const [score, setScore] = useState(0);
 	const [gameOver, setGameOver] = useState(false);
-	const [time, setTime] = useState(5);
+	const [time, setTime] = useState(difficulty[initialDifficulty].timeLimit);
 
 	// handling the useEffect for the countdown timer
 	useEffect(() => {
@@ -69,10 +116,15 @@ function Game() {
 		}
 		// checking if the user inputed the correct answer
 		if (parseFloat(answer) === correctAnswer) {
-			setScore(score + 1);
-			setQuestion(generateNumbers());
+			const newScore = score + 1;
+			const difficultyLevel = getDifficultyFromScore(newScore);
+			const newQuestion = generateNumbers(difficultyLevel);
+			const newTime = difficulty[difficultyLevel].timeLimit;
+
+			setScore(newScore);
+			setQuestion(newQuestion);
 			setAnswer("");
-			setTime(5);
+			setTime(newTime);
 		} else {
 			setGameOver(true);
 		}
@@ -96,8 +148,9 @@ function Game() {
 				) : (
 					<form onSubmit={handleSubmit}>
 						<h3>
-							{question.num1} {question.operator} {question.num2}{" "}
-							=
+							{question.num1}
+							{question.operator}
+							{question.num2}=
 						</h3>
 						<input
 							type="text"
