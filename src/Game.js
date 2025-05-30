@@ -3,6 +3,11 @@ import "./game.css";
 
 function Game() {
 	// setting difficulty levels
+	/* Difficulty Levels Explained
+	* You start with only addition questions for 10 seconds per question
+	* When your score is 20, you start getting subtraction and multiplication for 7 seconds each
+	* Etc
+	*/
 	const difficulty = {
 		easy: {
 			range: 10,
@@ -33,13 +38,17 @@ function Game() {
 
 	// function to generate the random questions
 	const generateNumbers = (difficultyLevel) => {
+		// destructuring the object to get the range and the operators
 		const { range, operators } = difficulty[difficultyLevel];
+		// random operator
 		const operator =
 			operators[Math.floor(Math.random() * operators.length)];
 
+		// random numbers for the questions
 		let num1 = Math.floor(Math.random() * range) + 1;
 		let num2 = Math.floor(Math.random() * range) + 1;
 
+		// so that I wouldn't have to have decimal divisions
 		if (operator === "÷") {
 			num1 = num1 * num2;
 		}
@@ -66,7 +75,7 @@ function Game() {
 	};
 
 	// setting the various states
-	const initialDifficulty = getDifficultyFromScore(0);
+	const initialDifficulty = getDifficultyFromScore(0); // so you'd always start from 0
 	const [question, setQuestion] = useState(
 		generateNumbers(initialDifficulty),
 	);
@@ -83,11 +92,13 @@ function Game() {
 	useEffect(() => {
 		if (gameOver) {
 			if (score > highScore) {
+				// replace the score in localStorage with the current score
 				setHighScore(score);
 				localStorage.setItem("highScore", score.toString());
 			}
 		}
 
+		// end game if you run out of time
 		if (time === 0) {
 			setGameOver(true);
 			return;
