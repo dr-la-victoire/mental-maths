@@ -97,6 +97,7 @@ function Game() {
 				localStorage.setItem("highScore", score.toString());
 			}
 			setTime(0);
+			return;
 		}
 
 		// end game if you run out of time
