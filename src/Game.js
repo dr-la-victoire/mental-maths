@@ -74,11 +74,18 @@ function Game() {
 	const [score, setScore] = useState(0);
 	const [gameOver, setGameOver] = useState(false);
 	const [time, setTime] = useState(difficulty[initialDifficulty].timeLimit);
+	const [highScore, setHighScore] = useState(() => {
+		const storedHighScore = localStorage.getItem("highScore");
+		return storedHighScore ? parseInt(storedHighScore) : 0;
+	});
 
 	// handling the useEffect for the countdown timer
 	useEffect(() => {
 		if (gameOver) {
-			return;
+			if (score > highScore) {
+				setHighScore(score);
+				localStorage.setItem("highScore", score.toString());
+			}
 		}
 
 		if (time === 0) {
@@ -91,7 +98,7 @@ function Game() {
 		}, 1000);
 
 		return () => clearTimeout(timer);
-	}, [time, gameOver]);
+	}, [time, gameOver, score, highScore]);
 
 	// handling the submit
 	const handleSubmit = (e) => {
@@ -137,6 +144,7 @@ function Game() {
 			</div>
 			<div className="game-stuff">
 				<h4>Score: {score}</h4>
+				<h4>High Score: {highScore}</h4>
 				<h4>Time: {time} secs</h4>
 			</div>
 			<div className="questions">
