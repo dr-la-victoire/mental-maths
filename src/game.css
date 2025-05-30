@@ -1,36 +1,52 @@
 .game-container {
-	width: 80%;
-	margin: 0 auto;
+    width: 80%;
+    margin: 0 auto;
 }
 
 .hero-text {
-	font-size: 2rem;
-	text-align: center;
-	margin-top: 1em;
+    font-size: 2rem;
+    text-align: center;
+    margin-top: 1em;
 }
 
 .game-stuff {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1em;
 }
 
 .questions {
-	text-align: center;
-	padding: 3em;
-	font-size: 3rem;
+    text-align: center;
+    padding: 3em;
+    font-size: 3rem;
+}
+
+.gameover {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .questions form {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	gap: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
 }
 
 form input {
-	font-size: 2rem;
-	width: 4rem;
-	text-align: center;
-	font-weight: bold;
+    font-size: 2rem;
+    width: 4rem;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* RESPONSIVENESS */
+@media (min-width: 300px) and (max-width: 600px) {
+    .gameover {
+        width: 100%;
+        font-size: 30px;
+    }
 }
